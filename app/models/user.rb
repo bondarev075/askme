@@ -13,12 +13,12 @@ class User < ApplicationRecord
   validates :username, :email, uniqueness: true
   validates :username, length: { maximum: 40 }
   validates :username, format: {
-      with: /\A^[^\W]+\z/, message: "only allows latin letters, numbers or underscores"
+      with: /\A[A-Za-z0-9_]+\z/, message: "only allows latin letters, numbers or underscores"
     }
 
   validates :password, presence: true, on: :create
   validates_confirmation_of :password
-  validates_format_of :email, with: /.+@.+\..+/i
+  validates :email, format: { with: /[\w\d\.-_]+@{1}[\w\d]+\.\w+/i }
 
   before_save :encrypt_password
 
