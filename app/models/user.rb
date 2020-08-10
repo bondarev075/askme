@@ -1,6 +1,7 @@
 require 'openssl'
 
 class User < ApplicationRecord
+  attr_accessor :password
 
   # Параметры работы модуля шифрования паролей
   ITERATIONS = 20000
@@ -8,13 +9,16 @@ class User < ApplicationRecord
 
   has_many :questions
 
-  # validates :username, :email, presence: true
-  # validates :username, :email, uniqueness: true
-
-  attr_accessor :password
+  validates :username, :email, presence: true
+  validates :username, :email, uniqueness: true
+  validates :username, length: { maximum: 40 }
+  validates :username, format: {
+      with: /\A^[^\W]+\z/, message: "only allows latin letters, numbers or underscores"
+    }
 
   validates :password, presence: true, on: :create
   validates_confirmation_of :password
+  validates_format_of :email, with: /.+@.+\..+/i
 
   before_save :encrypt_password
 
@@ -34,13 +38,11 @@ class User < ApplicationRecord
     user = find_by(email: email)
 
     return nil unless user.present?
-    puts 'FOUND ' + user.name
+
     pass_hash = User.hash_to_string(OpenSSL::PKCS5.pbkdf2_hmac(password, user.password_salt, ITERATIONS, DIGEST.length, DIGEST))
 
-    unless user.password_hash == pass_hash
-      nil
-    else
-      user
-    end
+    return nil unless user.password_hash == pass_hash
+
+    user
   end
 end
