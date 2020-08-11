@@ -18,7 +18,7 @@ class User < ApplicationRecord
 
   validates :password, presence: true, on: :create
   validates_confirmation_of :password
-  validates :email, format: { with: /[\w\d\.-_]+@{1}[\w\d]+\.\w+/i }
+  validates :email, format: { with: /\A[\w\d\.-_]+@{1}[\w\d]+\.\w+\z/ }
 
   before_save :encrypt_password
 
