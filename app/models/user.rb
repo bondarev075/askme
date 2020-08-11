@@ -10,17 +10,24 @@ class User < ApplicationRecord
   has_many :questions
 
   validates :username, :email, presence: true
-  validates :username, :email, uniqueness: true
+  validates :username, uniqueness: { case_sensitive: false }
   validates :username, length: { maximum: 40 }
   validates :username, format: {
-      with: /\A[A-Za-z0-9_]+\z/, message: "only allows latin letters, numbers or underscores"
+      with: /\A[A-Za-z0-9_]+\z/, message: "username allows only latin letters, numbers or underscores"
     }
+
+  validates :email, uniqueness: true
+  validates :email, format: { with: /\A[\w\d\.-_]+@{1}[\w\d]+\.\w+\z/ }
 
   validates :password, presence: true, on: :create
   validates_confirmation_of :password
-  validates :email, format: { with: /\A[\w\d\.-_]+@{1}[\w\d]+\.\w+\z/ }
 
   before_save :encrypt_password
+  before_save :username_transform
+
+  def username_transform
+    self.username = username.downcase
+  end
 
   def encrypt_password
     if self.password.present?
