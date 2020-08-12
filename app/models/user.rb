@@ -16,17 +16,18 @@ class User < ApplicationRecord
       with: /\A[A-Za-z0-9_]+\z/, message: "username allows only latin letters, numbers or underscores"
     }
 
-  validates :email, uniqueness: true
+  validates :email, uniqueness: { case_sensitive: false }
   validates :email, format: { with: /\A[\w\d\.-_]+@{1}[\w\d]+\.\w+\z/ }
 
   validates :password, presence: true, on: :create
-  validates_confirmation_of :password
+  validates :password, confirmation: true
 
   before_save :encrypt_password
-  before_save :username_transform
+  before_save :username_and_email_downcase
 
-  def username_transform
+  def username_and_email_downcase
     self.username = username.downcase
+    self.email = email.downcase
   end
 
   def encrypt_password
