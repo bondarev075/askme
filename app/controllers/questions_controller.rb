@@ -11,7 +11,7 @@ class QuestionsController < ApplicationController
     if @question.save
       redirect_to user_path(@question.user), notice: 'Новый вопрос успешно записан.'
     else
-      render :new
+      render :edit
     end
   end
 

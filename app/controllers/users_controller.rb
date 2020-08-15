@@ -37,9 +37,12 @@ class UsersController < ApplicationController
   def show
     @questions = @user.questions.order(created_at: :desc)
 
-    @user_questions_count = @user.questions.count
-    @declinated_word = word_declination(@user_questions_count,
-                        'вопрос', 'вопроса', 'вопросов')
+    @questions_count = @questions.count
+    @answers_count = @questions.where.not(answer: nil).count
+    @unanswered_count = @questions_count - @answers_count
+
+    @question_declinated = word_declination(@questions_count, 'вопрос', 'вопроса', 'вопросов')
+    @answer_declinated = word_declination(@answers_count, 'ответ', 'ответа', 'ответов')
 
     @new_question = @user.questions.build
   end
