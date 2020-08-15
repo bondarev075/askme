@@ -9,6 +9,7 @@ gem 'webpacker', '~> 4.0'
 gem 'bootsnap', '>= 1.4.2', require: false
 
 gem 'uglifier'
+gem 'rails_12factor'
 
 group :production do
   gem 'pg'
