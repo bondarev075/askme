@@ -37,6 +37,10 @@ class UsersController < ApplicationController
   def show
     @questions = @user.questions.order(created_at: :desc)
 
+    @user_questions_count = @user.questions.count
+    @declinated_word = word_declination(@user_questions_count,
+                        'вопрос', 'вопроса', 'вопросов')
+
     @new_question = @user.questions.build
   end
 
@@ -53,5 +57,15 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:email, :password, :password_confirmation,
             :name, :username, :avatar_link)
+  end
+
+  def word_declination(number, one, few, many)
+    return many if (11..14).include?(number % 100)
+
+    last_digit = number % 10
+
+    return one if last_digit == 1
+    return few if (2..4).include?(last_digit)
+    many
   end
 end
