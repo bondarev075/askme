@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-
   before_action :find_user, except: [:index, :create, :new]
   before_action :authorize_user, only: [:edit, :update]
 
@@ -43,6 +42,8 @@ class UsersController < ApplicationController
     @unanswered_count = @questions_count - @answers_count
 
     @new_question = @user.questions.build
+
+    @background_color = @user.profile_bg_color ||= "#005a55"
   end
 
   private
@@ -57,6 +58,6 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:email, :password, :password_confirmation,
-            :name, :username, :avatar_link)
+            :name, :username, :avatar_link, :profile_bg_color)
   end
 end
