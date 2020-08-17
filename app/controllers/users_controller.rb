@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :find_user, except: [:index, :create, :new]
-  before_action :authorize_user, only: [:edit, :update]
+  before_action :authorize_user, only: [:edit, :update, :destroy]
 
   def index
     @users = User.all
@@ -24,6 +24,18 @@ class UsersController < ApplicationController
   end
 
   def edit
+  end
+
+  def destroy
+
+    @user.questions.destroy_all
+
+    if @user.destroy
+      session[params[:id]] = nil
+      redirect_to root_path, alert: 'Ваш профиль удален!'
+    else
+      render :edit
+    end
   end
 
   def update
