@@ -42,9 +42,6 @@ class UsersController < ApplicationController
     @answers_count = @questions.where.not(answer: nil).count
     @unanswered_count = @questions_count - @answers_count
 
-    @question_declinated = word_declination(@questions_count, 'вопрос', 'вопроса', 'вопросов')
-    @answer_declinated = word_declination(@answers_count, 'ответ', 'ответа', 'ответов')
-
     @new_question = @user.questions.build
   end
 
@@ -61,15 +58,5 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:email, :password, :password_confirmation,
             :name, :username, :avatar_link)
-  end
-
-  def word_declination(number, one, few, many)
-    return many if (11..14).include?(number % 100)
-
-    last_digit = number % 10
-
-    return one if last_digit == 1
-    return few if (2..4).include?(last_digit)
-    many
   end
 end
