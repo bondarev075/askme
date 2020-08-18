@@ -50,8 +50,6 @@ class UsersController < ApplicationController
     @unanswered_count = @questions_count - @answers_count
 
     @new_question = @user.questions.build
-
-    @background_color = @user.profile_bg_color ||= "#005a55"
   end
 
   private

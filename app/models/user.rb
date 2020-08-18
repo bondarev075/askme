@@ -19,6 +19,8 @@ class User < ApplicationRecord
   validates :email, uniqueness: { case_sensitive: false }
   validates :email, format: { with: /\A[\w\d\.-_]+@{1}[\w\d]+\.\w+\z/ }
 
+  validates :profile_bg_color, format: { with: /\A#(?:\h{3}){1,2}\z/ }
+
   validates :password, presence: true, on: :create
   validates :password, confirmation: true
 
