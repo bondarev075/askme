@@ -27,9 +27,6 @@ class UsersController < ApplicationController
   end
 
   def destroy
-
-    @user.questions.destroy_all
-
     if @user.destroy
       session[params[:id]] = nil
       redirect_to root_path, alert: 'Ваш профиль удален!'
@@ -48,7 +45,6 @@ class UsersController < ApplicationController
 
   def show
     @questions = @user.questions.order(created_at: :desc)
-
     @questions_count = @questions.count
     @answers_count = @questions.where.not(answer: nil).count
     @unanswered_count = @questions_count - @answers_count
