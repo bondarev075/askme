@@ -26,6 +26,10 @@
 .question-answer {
 }
 
+.question-author {
+  margin-left: 10px;
+}
+
 .question-date {
   color: #a0a0a0;
   font-size: 12px;
@@ -33,7 +37,7 @@
 
 .question-actions {
   font-size: 20px;
-  border-top: 1px solid #D9E6E5;
+  border-top: 1px solid #d9e6e5;
   text-align: right;
   padding: 10px 15px;
 }
