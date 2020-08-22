@@ -7,7 +7,7 @@ class User < ApplicationRecord
   ITERATIONS = 20000
   DIGEST = OpenSSL::Digest::SHA256.new
 
-  has_many :questions
+  has_many :questions, dependent: :destroy
 
   validates :username, :email, presence: true
   validates :username, uniqueness: { case_sensitive: false }
