@@ -18,6 +18,7 @@ end
 group :development, :test do
   gem 'sqlite3', '~> 1.4'
   # gem 'pry-rails'
+  gem 'byebug'
 end
 
 group :development do

@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-  before_action :set_question, only: [:show, :edit, :update, :destroy]
+  before_action :set_question, only: [:edit, :update, :destroy]
   before_action :authorize_user, except: [:create]
 
   def edit
@@ -7,7 +7,7 @@ class QuestionsController < ApplicationController
 
   def create
     @question = Question.new(question_params)
-    @question.author_id = current_user.id if current_user.present?
+    @question.author = current_user
 
     if @question.save
       redirect_to user_path(@question.user), notice: 'Новый вопрос успешно записан.'
