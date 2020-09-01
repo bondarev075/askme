@@ -8,7 +8,7 @@ class User < ApplicationRecord
   DIGEST = OpenSSL::Digest::SHA256.new
 
   has_many :questions, dependent: :destroy
-  has_many :orphaned_questions,
+  has_many :author_questions,
       class_name: 'Question',
       foreign_key: "author_id",
       dependent: :nullify
