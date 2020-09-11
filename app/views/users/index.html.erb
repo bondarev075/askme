@@ -11,4 +11,10 @@
         </div>
       </div>
   <% end %>
+
+  <div>
+    <% @tags.each do |tag| %>
+      <%= link_to tag.name, tag_path(tag) %>
+    <% end %>
+  </div>
 </div>

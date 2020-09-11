@@ -1,0 +1,9 @@
+<h1 class="title-white">Вопросы по тэгу <%= @tag.name %></h1>
+
+<div class="user-questions buffer-both">
+  <div class="questions-list">
+    <% @questions.each do |question| %>
+      <%= render partial: 'questions/question', object: question %>
+    <% end %>
+  </div>
+</div>

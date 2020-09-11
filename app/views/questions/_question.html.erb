@@ -11,13 +11,19 @@
       </div>
     <% end %>
 
-    <div class="question-date">
+    <div class="question-date buffer-both">
       <%= l(question.created_at, format: :short) %>
       <% if question.author.present? %>
         <%= link_to "Автор: #{question.author.name}",
-              user_path(question.author),
-              class: "question-author" %>
-        <% end %>
+                    user_path(question.author),
+                    class: "question-author" %>
+      <% end %>
+    </div>
+
+    <div class="question-tags">
+      <small>
+        Тэги: <%= question.tags.map { |t| link_to t.name, tag_path(t) }.join(', ').html_safe %>
+      </small>
     </div>
   </div>
 

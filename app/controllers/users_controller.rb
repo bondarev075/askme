@@ -4,6 +4,7 @@ class UsersController < ApplicationController
 
   def index
     @users = User.all
+    @tags = Tag.with_questions
   end
 
   def new
@@ -21,9 +22,6 @@ class UsersController < ApplicationController
     else
       render :new
     end
-  end
-
-  def edit
   end
 
   def destroy
